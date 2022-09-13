@@ -9,7 +9,6 @@ body {
   padding: 0;
   background-color: #b4b4b4;
   font-family: "Montserrat", sans-serif;
-
 }
 
 .main-container {
@@ -70,7 +69,8 @@ body {
 }
 
 .upload-container p {
-  margin: 1rem 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .output-outer-container {
@@ -81,7 +81,7 @@ body {
   background: white;
   border: 3px solid var(--color-shadow, currentColor);
   box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
-  max-width: 60rem;
+  max-width: 70rem;
 }
 
 .upload-form-button-group {
@@ -110,7 +110,9 @@ body {
 
 .output-container {
   margin: 1rem 1rem;
+  max-width: 90%;
   white-space: pre-line;
+  word-wrap: break-word;
 }
 
 .loader {
