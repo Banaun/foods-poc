@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+* {
+  font-size: 1vw;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #b4b4b4;
+  font-family: "Montserrat", sans-serif;
+
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container div h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.main-container div h3 {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+}
+
+.upload-form {
+  margin: 2rem 5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-form input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 3px solid;
+  background-color: white;
+}
+
+.upload-form button {
+  padding: 0.5rem;
+  background: white;
+  border: 3px solid black;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+}
+
+.upload-form button:hover {
+  background: black;
+  color: white;
+}
+
+.upload-container p {
+  margin: 1rem 1rem;
+}
+
+.output-outer-container {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+  max-width: 60rem;
+}
+
+.upload-form-button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.retrieve-text-button,
+.download-image-button {
+  padding: 0.8rem 1rem;
+  background: white;
+  border: 3px solid black;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+}
+
+.retrieve-text-button:hover,
+.download-image-button:hover {
+  background: black;
+  color: white;
+}
+
+.output-container {
+  margin: 1rem 1rem;
+  white-space: pre-line;
+}
+
+.loader {
+  border: 16px solid #b4b4b4;
+  border-top: 16px solid black;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
