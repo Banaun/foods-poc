@@ -1,7 +1,6 @@
 package com.foodsPOC.FoodsPOC.controller;
 
-import com.foodsPOC.FoodsPOC.helper.ConvertToImage;
-//import com.foodsPOC.FoodsPOC.helper.MostRepeatedWord;
+import com.foodsPOC.FoodsPOC.helper.ReadUploadedFile;
 import com.foodsPOC.FoodsPOC.message.ResponseMessage;
 import com.foodsPOC.FoodsPOC.services.FileStorageService;
 
@@ -45,8 +44,9 @@ public class FileController {
         try {
             //MostRepeatedWord mostRepeatedWord = new MostRepeatedWord(filename);
             //message = mostRepeatedWord.countWords();
-            ConvertToImage convertToImage = new ConvertToImage(filename);
-            message = convertToImage.readFile();
+            ReadUploadedFile readUploadedFile = new ReadUploadedFile(filename);
+            //if filename ends with .xlsx
+            message = readUploadedFile.readAndReturnXLSX();
         } catch (Exception e) {
             message = "Could not process the file.";
         }

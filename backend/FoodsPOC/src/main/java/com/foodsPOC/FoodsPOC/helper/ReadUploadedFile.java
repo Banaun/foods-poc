@@ -11,19 +11,20 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ConvertToImage {
+public class ReadUploadedFile {
     private String filename;
 
-    public ConvertToImage(String filename) {
+    public ReadUploadedFile(String filename) {
         this.filename = filename;
     }
 
-    public String readFile() {
+    public String readAndReturnXLSX() {
         String fileContents = "";
 
         try (FileInputStream file = new FileInputStream(new File("uploads/" + this.filename))) {
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
+            workbook.close();
             Iterator<Row> itr = sheet.iterator();
 
             while (itr.hasNext()) {

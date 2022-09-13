@@ -17,7 +17,7 @@ public class FoodsPocApplication implements CommandLineRunner {
 		SpringApplication.run(FoodsPocApplication.class, args);
 	}
 
-	//When starting application, delete uploads and tempfiles folders, then initialize clean folders
+	//When starting application, delete uploads folder, then initialize clean folders
 	@Override
 	public void run(String... arg) throws Exception {
 		storageService.deleteAll();
