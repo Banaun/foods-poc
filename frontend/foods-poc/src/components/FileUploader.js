@@ -39,16 +39,23 @@ const FileUploader = ({
   }
 
   return (
-    <div className="upload-container">
-      <form className="upload-form" onSubmit={handleSubmit}>
-        <input
-          type="file"
-          accept=".rtf, .md, .txt, .file, .xlsx"
-          onChange={handleChange}
-        />
-        <button type="submit">Upload</button>
-      </form>
-      {retrievable ? <p>Uploaded file: {selectedFile.name}</p> : <></>}
+    <div className="upload-outer-container">
+      <div className="upload-container">
+        <form className="upload-form" onSubmit={handleSubmit}>
+          <input
+            type="file"
+            accept=".rtf, .md, .txt, .file, .xlsx"
+            onChange={handleChange}
+          />
+          {selectedFile
+          ?
+            <button type="submit">Upload</button>
+          :
+            <></>
+          }
+        </form>
+        {retrievable ? <p>Uploaded file: {selectedFile.name}</p> : <></>}
+      </div>
     </div>
   );
 };

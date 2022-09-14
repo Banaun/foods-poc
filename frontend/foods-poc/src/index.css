@@ -7,15 +7,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #b4b4b4;
   font-family: "Montserrat", sans-serif;
-}
-
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .main-container div h1 {
@@ -23,9 +15,9 @@ body {
   text-align: center;
 }
 
-.main-container div h3 {
-  font-size: 1rem;
-  text-align: center;
+.upload-outer-container {
+  display: flex;
+  justify-content: center;
 }
 
 .upload-container {
@@ -34,43 +26,41 @@ body {
   justify-content: center;
   align-items: center;
   background: white;
-  border: 3px solid var(--color-shadow, currentColor);
-  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+  min-width: 30rem;
+  max-width: 70rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .upload-form {
-  margin: 2rem 5rem 1rem;
+  margin: 1rem 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .upload-form input {
-  margin-bottom: 1rem;
+  font-size: 1rem;
   padding: 0.5rem;
   box-sizing: border-box;
   display: block;
   width: 100%;
-  border: 3px solid;
   background-color: white;
 }
 
 .upload-form button {
-  padding: 0.5rem;
-  background: white;
-  border: 3px solid black;
+  font-size: 1rem;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
-}
-
-.upload-form button:hover {
-  background: black;
-  color: white;
 }
 
 .upload-container p {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+.output-flex-container {
+  display: flex;
+  justify-content: center;
 }
 
 .output-outer-container {
@@ -79,8 +69,8 @@ body {
   flex-direction: column;
   align-items: center;
   background: white;
-  border: 3px solid var(--color-shadow, currentColor);
-  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  min-width: 30rem;
   max-width: 70rem;
 }
 
@@ -95,17 +85,10 @@ body {
 
 .retrieve-text-button,
 .download-image-button {
-  padding: 0.8rem 1rem;
-  background: white;
-  border: 3px solid black;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
-}
-
-.retrieve-text-button:hover,
-.download-image-button:hover {
-  background: black;
-  color: white;
 }
 
 .output-container {
@@ -115,6 +98,12 @@ body {
   word-wrap: break-word;
 }
 
+.output img {
+  width: 3rem;
+  height: auto;
+  object-fit:cover;
+}
+
 .loader {
   border: 16px solid #b4b4b4;
   border-top: 16px solid black;
@@ -122,6 +111,39 @@ body {
   width: 5rem;
   height: 5rem;
   animation: spin 2s linear infinite;
+}
+
+.a3-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3508px;
+  height: 4961px;
+  word-wrap: break-word;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.a3-output-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+}
+
+.a3-output {
+  width: 3040px;
+  max-height: 4500px;
+}
+
+.a3-output-container img {
+  width: 160px;
+  height: auto;
+}
+
+.preview-text {
+  margin-left: 44vw;
+  font-size: 2rem;
 }
 
 @keyframes spin {

@@ -11,7 +11,6 @@ function App() {
     <div className="main-container">
       <div>
         <h1>IKEA Foods PoC</h1>
-        <h3>Blablabla bla bla</h3>
       </div>
       <FileUploader
         selectedFile={selectedFile}
@@ -19,11 +18,16 @@ function App() {
         setSelectedFile={setSelectedFile}
         setRetrievable={setRetrievable}
       />
+      {retrievable
+      ?
       <OutputField
-        selectedFile={selectedFile}
-        retrievable={retrievable}
-        setRetrievable={setRetrievable}
+      selectedFile={selectedFile}
+      retrievable={retrievable}
+      setRetrievable={setRetrievable}
       />
+      :
+      <></>
+      }
     </div>
   );
 }
