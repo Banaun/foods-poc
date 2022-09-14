@@ -43,8 +43,12 @@ public class FileStorageServiceImpl implements FileStorageService {
         //Check if file is allowed
         if(contentTypes.contains(fileContentType)) {
             try {
-                Files.copy(file.getInputStream(), this.uploads.resolve(file.getOriginalFilename()));
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                if(Files.exists(this.uploads.resolve(file.getOriginalFilename()))) {
+                    message = file.getOriginalFilename() + " already exists.";
+                } else {
+                    Files.copy(file.getInputStream(), this.uploads.resolve(file.getOriginalFilename()));
+                    message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                }
             } catch (Exception e) {
                 message = "Could not upload the file.";
             }
