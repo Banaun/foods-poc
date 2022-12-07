@@ -1,4 +1,4 @@
-import UploadService from "../services/upload-files-service";
+import UploadService from '../services/upload-files-service';
 
 const FileUploader = ({
   selectedFile,
@@ -20,9 +20,9 @@ const FileUploader = ({
         .then((res) => {
           //Update state for retrievable text
           console.log(res);
-          if (res.data.message !== "Could not upload the file.") {
+          if (res.data.message !== 'Could not upload the file.') {
             setRetrievable(true);
-            alert(res.data.message);
+            // alert(res.data.message);
           } else {
             setRetrievable(false);
             alert(res.data.message);
@@ -32,27 +32,22 @@ const FileUploader = ({
           console.log(res);
         });
     } else {
-      alert("No file chosen!");
+      alert('No file chosen!');
     }
     //Clear the input field (just looks better)
     e.target.reset();
   }
 
   return (
-    <div className="upload-outer-container">
-      <div className="upload-container">
-        <form className="upload-form" onSubmit={handleSubmit}>
+    <div className='upload-outer-container'>
+      <div className='upload-container'>
+        <form className='upload-form' onSubmit={handleSubmit}>
           <input
-            type="file"
-            accept=".rtf, .md, .txt, .file, .xlsx"
+            type='file'
+            accept='.rtf, .md, .txt, .file, .xlsx'
             onChange={handleChange}
           />
-          {selectedFile
-          ?
-            <button type="submit">Upload</button>
-          :
-            <></>
-          }
+          {selectedFile ? <button type='submit'>Upload</button> : <></>}
         </form>
         {retrievable ? <p>Uploaded file: {selectedFile.name}</p> : <></>}
       </div>

@@ -1,17 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
-
-* {
-  font-size: 1vw;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.main-container div h1 {
-  font-size: 2rem;
+.top-div {
   text-align: center;
 }
 
@@ -28,7 +26,8 @@ body {
   background: white;
   min-width: 30rem;
   max-width: 70rem;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .upload-form {
@@ -50,7 +49,7 @@ body {
 .upload-form button {
   font-size: 1rem;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .upload-container p {
@@ -69,7 +68,8 @@ body {
   flex-direction: column;
   align-items: center;
   background: white;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   min-width: 30rem;
   max-width: 70rem;
 }
@@ -88,7 +88,7 @@ body {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .output-container {
@@ -101,7 +101,7 @@ body {
 .output img {
   width: 3rem;
   height: auto;
-  object-fit:cover;
+  object-fit: cover;
 }
 
 .loader {
@@ -120,7 +120,8 @@ body {
   width: 3508px;
   height: 4961px;
   word-wrap: break-word;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .a3-output-container {
