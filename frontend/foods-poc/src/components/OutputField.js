@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import ProcessFileService from '../services/process-file-service';
-//import { ReactComponent as SvgSandwich } from "../assets/images/IKEAfoods-01.svg";
-//import { ReactComponent as SvgBookcase } from "../assets/images/IKEAfoods-02.svg";
 import PngSandwich from '../assets/images/Grafik-17.png';
 import PngBookcase from '../assets/images/Grafik-18.png';
 import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
 
-const OutputField = ({ selectedFile, retrievable, setRetrievable }) => {
+const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
   const [textArr, setTextArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fileRetrieved, setFileRetrieved] = useState(false);
@@ -78,20 +76,10 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable }) => {
               <div className='loader'></div>
             ) : (
               <div className='output'>
-                {/*
-            <SvgSandwich width="3rem" />
-            <SvgSandwich width="3rem" />
-            <SvgSandwich width="3rem" />
-            <SvgSandwich width="3rem" />
-            <SvgSandwich width="3rem" />
-            <SvgSandwich width="3rem" />
-            */}
                 {textArr.map((item) => {
                   if (item === 'x') {
-                    //return <SvgSandwich width="3rem" />;
                     return <img src={PngSandwich} alt='Sandwich' />;
                   } else if (item === 'v') {
-                    //return <SvgBookcase width="3rem" />;
                     return <img src={PngBookcase} alt='Bookcase' />;
                   } else {
                     return <></>;

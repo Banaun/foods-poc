@@ -1,3 +1,4 @@
+import { Button, Input } from '@material-tailwind/react';
 import UploadService from '../services/upload-files-service';
 
 const FileUploader = ({
@@ -39,17 +40,38 @@ const FileUploader = ({
   }
 
   return (
-    <div className='upload-outer-container'>
-      <div className='upload-container'>
-        <form className='upload-form' onSubmit={handleSubmit}>
+    <div className='flex justify-center'>
+      <div className='flex flex-col justify-center w-[22rem] sm:w-[30rem] shadow-md mt-6'>
+        <form
+          className='flex flex-col items-center p-6'
+          onSubmit={handleSubmit}
+        >
+          <label
+            htmlFor='formFile'
+            className='form-label inline-block mb-2 text-sm'
+          >
+            Upload a file
+          </label>
           <input
+            className='form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-clip-padding border border-solid border-blue-500 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-800 focus:outline-none'
+            id='formFile'
             type='file'
             accept='.rtf, .md, .txt, .file, .xlsx'
             onChange={handleChange}
-          />
-          {selectedFile ? <button type='submit'>Upload</button> : <></>}
+          ></input>
+          {selectedFile ? (
+            <Button type='submit' className='mt-4'>
+              Upload
+            </Button>
+          ) : (
+            <></>
+          )}
         </form>
-        {retrievable ? <p>Uploaded file: {selectedFile.name}</p> : <></>}
+        {retrievable ? (
+          <p className='mt-4'>Uploaded file: {selectedFile.name}</p>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

@@ -33,6 +33,7 @@ function App() {
           selectedFile={selectedFile}
           retrievable={retrievable}
           setRetrievable={setRetrievable}
+          layout={chosenLayout}
         />
       ) : (
         <></>
