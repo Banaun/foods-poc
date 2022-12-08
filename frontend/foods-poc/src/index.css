@@ -9,55 +9,11 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.top-div {
-  text-align: center;
-}
-
-.output-flex-container {
-  display: flex;
-  justify-content: center;
-}
-
-.output-outer-container {
-  margin: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  min-width: 30rem;
-  max-width: 70rem;
-}
-
-.upload-form-button-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.retrieve-text-button,
-.download-image-button {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.output-container {
-  margin: 1rem 1rem;
-  max-width: 90%;
-  white-space: pre-line;
-  word-wrap: break-word;
-}
-
-.output img {
-  width: 3rem;
-  height: auto;
-  object-fit: cover;
+input::file-selector-button {
+  padding: 0.5em;
+  background: rgb(33 150 243);
+  color: white;
+  border: none;
 }
 
 .loader {
@@ -67,40 +23,6 @@ body {
   width: 5rem;
   height: 5rem;
   animation: spin 2s linear infinite;
-}
-
-.a3-preview-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3508px;
-  height: 4961px;
-  word-wrap: break-word;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-.a3-output-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: inherit;
-  height: inherit;
-}
-
-.a3-output {
-  width: 3040px;
-  max-height: 4500px;
-}
-
-.a3-output-container img {
-  width: 160px;
-  height: auto;
-}
-
-.preview-text {
-  margin-left: 44vw;
-  font-size: 2rem;
 }
 
 @keyframes spin {

@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProcessFileService from '../services/process-file-service';
-import PngSandwich from '../assets/images/Grafik-17.png';
-import PngBookcase from '../assets/images/Grafik-18.png';
 import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
+import { Button } from '@material-tailwind/react';
 
 const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
   const [textArr, setTextArr] = useState([]);
+  const [identifiers, setIdentifiers] = useState();
   const [loading, setLoading] = useState(false);
   const [fileRetrieved, setFileRetrieved] = useState(false);
+
+  useEffect(() => {
+    if (layout) {
+      const identifiersTemp = [];
+      for (let graphic in layout) {
+        identifiersTemp.push(layout[graphic].id);
+      }
+      setIdentifiers(identifiersTemp);
+    }
+  }, [layout]);
 
   function processText(e) {
     e.preventDefault();
@@ -18,7 +28,6 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
       setLoading(true);
       //Get the processed text from backend
       ProcessFileService.process(selectedFile.name).then((res) => {
-        console.log(res.data);
         replaceValuesWithSvg(res.data.message);
         setLoading(false);
         setFileRetrieved(true);
@@ -34,10 +43,8 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
     let tempTextArr = [];
 
     for (let i = 0; i <= 519; i++) {
-      if (textArr[i] === 'x') {
-        tempTextArr.push('x');
-      } else if (textArr[i] === 'v') {
-        tempTextArr.push('v');
+      if (identifiers.includes(textArr[i])) {
+        tempTextArr.push(textArr[i]);
       }
     }
     setTextArr([...tempTextArr]);
@@ -47,66 +54,91 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
     //Download in A3 format (420mm x 297mm / 4961px x 3508px)
     e.preventDefault();
 
-    const outputElement = document.querySelector('.a3-output-container');
+    const outputElement = document.getElementById('a3');
 
     const canvas = await html2canvas(outputElement);
     const dataURL = canvas.toDataURL('image/png');
 
-    downloadjs(dataURL, 'download.png', 'image/png');
+    downloadjs(dataURL, 'foodspoc.png', 'image/png');
   }
 
   return (
     <>
-      <div className='output-flex-container'>
-        <div className='output-outer-container'>
-          <div className='upload-form-button-group'>
-            <button className='retrieve-text-button' onClick={processText}>
+      <div className='flex justify-center mb-6'>
+        <div className='flex flex-col items-center bg-white min-w-[30rem] max-w-[70rem] border border-solid border-blue-500'>
+          <div className='flex flex-row justify-between mt-4'>
+            <Button
+              className='m-1'
+              onClick={processText}
+              disabled={fileRetrieved}
+            >
               Retrieve file
-            </button>
-            {fileRetrieved ? (
-              <button className='download-image-button' onClick={downloadImage}>
+            </Button>
+            {fileRetrieved && layout.length >= 2 ? (
+              <Button className='m-1' onClick={downloadImage}>
                 Download image
-              </button>
+              </Button>
             ) : (
               <></>
             )}
           </div>
-          <div className='output-container'>
+          <div className='mt-4 max-w-[90%] whitespace-pre-line break-normal'>
             {loading ? (
               <div className='loader'></div>
+            ) : layout.length >= 2 ? (
+              <>
+                <div className='flex flex-row flex-wrap justify-center'>
+                  {textArr.map((item) => {
+                    for (let graphic in layout) {
+                      if (item === layout[graphic].id) {
+                        return (
+                          <img
+                            className='w-[52px] h-auto object-cover'
+                            src={require(`../assets/images/${layout[graphic].icon}.png`)}
+                            alt='icon'
+                          />
+                        );
+                      }
+                    }
+                  })}
+                </div>
+                <div className='flex flex-row w-full h-20 justify-between items-center'>
+                  <div>hej</div>
+                  <div>hej</div>
+                </div>
+              </>
             ) : (
-              <div className='output'>
-                {textArr.map((item) => {
-                  if (item === 'x') {
-                    return <img src={PngSandwich} alt='Sandwich' />;
-                  } else if (item === 'v') {
-                    return <img src={PngBookcase} alt='Bookcase' />;
-                  } else {
-                    return <></>;
-                  }
-                })}
-              </div>
+              <p className='mb-6'>Please select at least two graphics!</p>
             )}
           </div>
         </div>
       </div>
-      {fileRetrieved ? (
+      {fileRetrieved && layout.length >= 2 ? (
         <>
-          <h1 className='preview-text'>A3 Preview</h1>
-          <div className='a3-preview-container'>
-            <div className='a3-output-container'>
-              <div className='a3-output'>
+          <h1 className='text-3xl'>A3 Preview</h1>
+          <div
+            id='a3'
+            className='flex justify-center items-center w-[3508px] h-[4961px] mb-40 break-normal border border-solid border-blue-500'
+          >
+            <div className='max-w-[90%] h-full mt-[38rem]'>
+              <div className='flex flex-row flex-wrap justify-center w-[3040px] max-h-[4500px]'>
                 {textArr.map((item) => {
-                  if (item === 'x') {
-                    //return <SvgSandwich width="3rem" />;
-                    return <img src={PngSandwich} alt='Sandwich' />;
-                  } else if (item === 'v') {
-                    //return <SvgBookcase width="3rem" />;
-                    return <img src={PngBookcase} alt='Bookcase' />;
-                  } else {
-                    return <></>;
+                  for (let graphic in layout) {
+                    if (item === layout[graphic].id) {
+                      return (
+                        <img
+                          className='w-[160px] h-auto'
+                          src={require(`../assets/images/${layout[graphic].icon}.png`)}
+                          alt='icon'
+                        />
+                      );
+                    }
                   }
                 })}
+              </div>
+              <div className='flex flex-row w-full h-[20rem] justify-between items-center'>
+                <div>hej</div>
+                <div>hej</div>
               </div>
             </div>
           </div>

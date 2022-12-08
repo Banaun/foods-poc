@@ -10,35 +10,35 @@ function App() {
   const [chosenLayout, setChosenLayout] = useState();
 
   return (
-    <div className='flex flex-col justify-center items-center'>
-      <div className='flex flex-col w-full items-center mt-4'>
+    <>
+      <div className='flex flex-col w-full items-center mt-4 h-12'>
         <h1 className='text-2xl'>Data Visualisation</h1>
         <span className='text-sm mt-1'>
           By: Christopher Danielsson & Emil Mogensen @ HiQ
         </span>
       </div>
-      <ChooseLayout setChosenLayout={setChosenLayout} />
-      {chosenLayout ? (
+      <div className='flex flex-col justify-center items-center'>
+        <ChooseLayout setChosenLayout={setChosenLayout} />
+
         <FileUploader
           selectedFile={selectedFile}
           retrievable={retrievable}
           setSelectedFile={setSelectedFile}
           setRetrievable={setRetrievable}
+          chosenLayout={chosenLayout}
         />
-      ) : (
-        <></>
-      )}
-      {retrievable ? (
-        <OutputField
-          selectedFile={selectedFile}
-          retrievable={retrievable}
-          setRetrievable={setRetrievable}
-          layout={chosenLayout}
-        />
-      ) : (
-        <></>
-      )}
-    </div>
+        {retrievable ? (
+          <OutputField
+            selectedFile={selectedFile}
+            retrievable={retrievable}
+            setRetrievable={setRetrievable}
+            layout={chosenLayout}
+          />
+        ) : (
+          <></>
+        )}
+      </div>
+    </>
   );
 }
 

@@ -1,12 +1,5 @@
-import {
-  Select,
-  Option,
-  Radio,
-  Input,
-  Button,
-  Chip,
-} from '@material-tailwind/react';
-import { useEffect, useState } from 'react';
+import { Radio, Input, Button, Chip } from '@material-tailwind/react';
+import { useState } from 'react';
 import graphic1 from '../assets/images/Grafik-01.png';
 import graphic2 from '../assets/images/Grafik-02.png';
 import graphic3 from '../assets/images/Grafik-03.png';
@@ -32,23 +25,17 @@ function ChooseLayout({ setChosenLayout }) {
   const [layout, setLayout] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(() => {
-    console.log(layout);
-  }, [layout]);
-
   const handleChange = (e) => {
+    e.preventDefault();
     setValue(e.target.value);
   };
 
-  const onSave = (e) => {
+  const onSave = () => {
     setChosenLayout(layout);
     setErrorMsg('');
   };
 
   const addGraphic = () => {
-    console.log(value);
-    console.log(icon);
-
     if (value) {
       if (icon) {
         for (let graphic in layout) {
@@ -270,10 +257,10 @@ function ChooseLayout({ setChosenLayout }) {
         />
       </div>
       {layout.length > 0 ? (
-        <div>
+        <div className='mt-6'>
           {layout.map((graphic) => (
             <Chip
-              className='mt-4 mr-2'
+              className='mr-1 ml-1'
               key={graphic.id}
               value={graphic.id}
               icon={
@@ -289,10 +276,8 @@ function ChooseLayout({ setChosenLayout }) {
       ) : (
         <></>
       )}
-      <div>
-        <Button className='mt-4' onClick={addGraphic}>
-          Add graphic
-        </Button>
+      <div className='mt-6'>
+        <Button onClick={addGraphic}>Add graphic</Button>
         {layout.length > 0 ? (
           <Button className='ml-2' onClick={onSave}>
             Save
