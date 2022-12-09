@@ -19,10 +19,10 @@ import graphic16 from '../assets/images/Grafik-16.png';
 import graphic17 from '../assets/images/Grafik-17.png';
 import graphic18 from '../assets/images/Grafik-18.png';
 
-function ChooseLayout({ setChosenLayout }) {
-  const [value, setValue] = useState();
-  const [icon, setIcon] = useState();
-  const [layout, setLayout] = useState([]);
+function ChooseLayout({ chosenLayout, setChosenLayout }) {
+  const [value, setValue] = useState('');
+  const [price, setPrice] = useState('');
+  const [icon, setIcon] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
@@ -30,24 +30,34 @@ function ChooseLayout({ setChosenLayout }) {
     setValue(e.target.value);
   };
 
-  const onSave = () => {
-    setChosenLayout(layout);
-    setErrorMsg('');
+  const handlePriceChange = (e) => {
+    e.preventDefault();
+    setPrice(e.target.value);
   };
 
   const addGraphic = () => {
     if (value) {
-      if (icon) {
-        for (let graphic in layout) {
-          if (layout[graphic].id === value) {
-            setErrorMsg('Art.nr is already taken!');
-            return;
+      if (price) {
+        if (icon) {
+          for (let graphic in chosenLayout) {
+            if (chosenLayout[graphic].id === value) {
+              setErrorMsg('Art.nr is already taken!');
+              return;
+            }
           }
+          setChosenLayout([
+            ...chosenLayout,
+            { id: value, price: price, icon: icon },
+          ]);
+          setErrorMsg('');
+          setValue('');
+          setPrice('');
+          setIcon('');
+        } else {
+          setErrorMsg('No icon chosen!');
         }
-        setLayout([...layout, { id: value, icon: icon }]);
-        setErrorMsg('');
       } else {
-        setErrorMsg('No icon chosen!');
+        setErrorMsg('No price entered!');
       }
     } else {
       setErrorMsg('No art.nr entered!');
@@ -55,8 +65,10 @@ function ChooseLayout({ setChosenLayout }) {
   };
 
   const removeGraphic = (graphic) => {
-    const updatedLayout = layout.filter((data) => data.id !== graphic.id);
-    setLayout(updatedLayout);
+    const updatedLayout = chosenLayout.filter((data) => data.id !== graphic.id);
+    setChosenLayout(updatedLayout);
+    setValue(graphic.id);
+    setPrice(graphic.price);
     // setEmployeeData(previousEmployeeData => previousEmployeeData.filter(data)=> data.id != employeeId )
   };
 
@@ -66,7 +78,11 @@ function ChooseLayout({ setChosenLayout }) {
         <span className='text-xs whitespace-nowrap mr-2'>
           Choose graphic for:{' '}
         </span>
-        <Input label='Art.nr' onChange={handleChange} />
+        <Input label='Art.nr' value={value} onChange={handleChange} />
+        <span className='text-xs whitespace-nowrap mr-2 ml-2'>
+          {`Set price for${value ? ' ' + value + ':' : ':'}`}{' '}
+        </span>
+        <Input label='Price' value={price} onChange={handlePriceChange} />
       </div>
       <div className='flex flex-wrap justify-center mt-2 gap-4 max-w-[80%] 2xl:max-w-[50%]'>
         <Radio
@@ -77,6 +93,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic1} className='w-8 sm:w-12' alt='joystick icon' />
           }
+          checked={icon === 'Grafik-01'}
         />
         <Radio
           id='controller'
@@ -86,6 +103,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic2} className='w-8 sm:w-12' alt='controller icon' />
           }
+          checked={icon === 'Grafik-02'}
         />
         <Radio
           id='half-circle-green'
@@ -99,6 +117,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='half-circle-green icon'
             />
           }
+          checked={icon === 'Grafik-03'}
         />
         <Radio
           id='triangle'
@@ -108,6 +127,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic4} className='w-8 sm:w-12' alt='triangle icon' />
           }
+          checked={icon === 'Grafik-04'}
         />
         <Radio
           id='book-green'
@@ -117,6 +137,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic5} className='w-8 sm:w-12' alt='book-green icon' />
           }
+          checked={icon === 'Grafik-05'}
         />
         <Radio
           id='meatball'
@@ -126,6 +147,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic6} className='w-8 sm:w-12' alt='meatball icon' />
           }
+          checked={icon === 'Grafik-06'}
         />
         <Radio
           id='hotdog'
@@ -135,6 +157,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic7} className='w-8 sm:w-12' alt='hotdog icon' />
           }
+          checked={icon === 'Grafik-07'}
         />
         <Radio
           id='circle-green'
@@ -148,6 +171,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='circle-green icon'
             />
           }
+          checked={icon === 'Grafik-08'}
         />
         <Radio
           id='circle-pink'
@@ -161,6 +185,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='circle-pink icon'
             />
           }
+          checked={icon === 'Grafik-09'}
         />
         <Radio
           id='line-pink'
@@ -170,6 +195,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic10} className='w-8 sm:w-12' alt='line-pink icon' />
           }
+          checked={icon === 'Grafik-10'}
         />
         <Radio
           id='leaf'
@@ -179,6 +205,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic11} className='w-8 sm:w-12' alt='leaf icon' />
           }
+          checked={icon === 'Grafik-11'}
         />
         <Radio
           id='fire'
@@ -188,6 +215,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic12} className='w-8 sm:w-12' alt='fire icon' />
           }
+          checked={icon === 'Grafik-12'}
         />
         <Radio
           id='square-blue'
@@ -201,6 +229,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='square-blue icon'
             />
           }
+          checked={icon === 'Grafik-13'}
         />
         <Radio
           id='square-red'
@@ -214,6 +243,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='square-red icon'
             />
           }
+          checked={icon === 'Grafik-14'}
         />
         <Radio
           id='book-blue'
@@ -223,6 +253,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic15} className='w-8 sm:w-12' alt='book-blue icon' />
           }
+          checked={icon === 'Grafik-15'}
         />
         <Radio
           id='half-circle-orange'
@@ -236,6 +267,7 @@ function ChooseLayout({ setChosenLayout }) {
               alt='half-circle-orange icon'
             />
           }
+          checked={icon === 'Grafik-16'}
         />
         <Radio
           id='sandwich'
@@ -245,6 +277,7 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic17} className='w-8 sm:w-12' alt='sandwich icon' />
           }
+          checked={icon === 'Grafik-17'}
         />
         <Radio
           id='bookcase'
@@ -254,11 +287,12 @@ function ChooseLayout({ setChosenLayout }) {
           label={
             <img src={graphic18} className='w-8 sm:w-12' alt='bookcase icon' />
           }
+          checked={icon === 'Grafik-18'}
         />
       </div>
-      {layout.length > 0 ? (
-        <div className='mt-6'>
-          {layout.map((graphic) => (
+      {chosenLayout?.length > 0 ? (
+        <div className='mt-4'>
+          {chosenLayout.map((graphic) => (
             <Chip
               className='mr-1 ml-1'
               key={graphic.id}
@@ -276,15 +310,15 @@ function ChooseLayout({ setChosenLayout }) {
       ) : (
         <></>
       )}
-      <div className='mt-6'>
+      {chosenLayout?.length < 2 ? (
+        <span className='text-sm font-bold mt-4'>
+          Select at least two graphics
+        </span>
+      ) : (
+        <></>
+      )}
+      <div className='mt-4'>
         <Button onClick={addGraphic}>Add graphic</Button>
-        {layout.length > 0 ? (
-          <Button className='ml-2' onClick={onSave}>
-            Save
-          </Button>
-        ) : (
-          <></>
-        )}
       </div>
       {errorMsg ? <span className='mt-2 text-red-500'>{errorMsg}</span> : <></>}
     </>

@@ -7,7 +7,7 @@ import OutputField from './components/OutputField';
 function App() {
   const [selectedFile, setSelectedFile] = useState();
   const [retrievable, setRetrievable] = useState(false);
-  const [chosenLayout, setChosenLayout] = useState();
+  const [chosenLayout, setChosenLayout] = useState([]);
 
   return (
     <>
@@ -18,7 +18,10 @@ function App() {
         </span>
       </div>
       <div className='flex flex-col justify-center items-center'>
-        <ChooseLayout setChosenLayout={setChosenLayout} />
+        <ChooseLayout
+          chosenLayout={chosenLayout}
+          setChosenLayout={setChosenLayout}
+        />
 
         <FileUploader
           selectedFile={selectedFile}
@@ -31,7 +34,6 @@ function App() {
           <OutputField
             selectedFile={selectedFile}
             retrievable={retrievable}
-            setRetrievable={setRetrievable}
             layout={chosenLayout}
           />
         ) : (

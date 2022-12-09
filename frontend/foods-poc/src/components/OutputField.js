@@ -4,11 +4,13 @@ import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
 import { Button } from '@material-tailwind/react';
 
-const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
+const OutputField = ({ selectedFile, retrievable, layout }) => {
   const [textArr, setTextArr] = useState([]);
   const [identifiers, setIdentifiers] = useState();
   const [loading, setLoading] = useState(false);
   const [fileRetrieved, setFileRetrieved] = useState(false);
+
+  let totalIncome = 0;
 
   useEffect(() => {
     if (layout) {
@@ -84,13 +86,14 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
           </div>
           <div className='mt-4 max-w-[90%] whitespace-pre-line break-normal'>
             {loading ? (
-              <div className='loader'></div>
+              <div className='loader mb-6'></div>
             ) : layout.length >= 2 ? (
               <>
                 <div className='flex flex-row flex-wrap justify-center'>
                   {textArr.map((item) => {
                     for (let graphic in layout) {
                       if (item === layout[graphic].id) {
+                        totalIncome += parseInt(layout[graphic].price);
                         return (
                           <img
                             className='w-[52px] h-auto object-cover'
@@ -102,10 +105,31 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
                     }
                   })}
                 </div>
-                <div className='flex flex-row w-full h-20 justify-between items-center'>
-                  <div>hej</div>
-                  <div>hej</div>
-                </div>
+                {fileRetrieved && layout.length >= 2 ? (
+                  <div className='flex flex-row w-full h-20 justify-between items-center'>
+                    <div className='flex flex-row items-center'>
+                      {layout.map((graphic) => {
+                        return (
+                          <>
+                            <img
+                              className='w-[40px]'
+                              src={require(`../assets/images/${graphic.icon}.png`)}
+                              alt='icon'
+                            />
+                            <span className='text-xl mr-4'>
+                              {`= ${graphic.id}`}
+                            </span>
+                          </>
+                        );
+                      })}
+                    </div>
+                    <div>
+                      <span className='text-xl'>{`Accumulated income: ${totalIncome}kr`}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <p className='mb-6'>Please select at least two graphics!</p>
@@ -137,8 +161,25 @@ const OutputField = ({ selectedFile, retrievable, setRetrievable, layout }) => {
                 })}
               </div>
               <div className='flex flex-row w-full h-[20rem] justify-between items-center'>
-                <div>hej</div>
-                <div>hej</div>
+                <div className='flex flex-row items-center'>
+                  {layout.map((graphic) => {
+                    return (
+                      <>
+                        <img
+                          className='w-[120px]'
+                          src={require(`../assets/images/${graphic.icon}.png`)}
+                          alt='icon'
+                        />
+                        <span className='text-[3rem] mr-4'>
+                          {`= ${graphic.id}`}
+                        </span>
+                      </>
+                    );
+                  })}
+                </div>
+                <div>
+                  <span className='text-[3rem]'>{`Accumulated income: ${totalIncome}kr`}</span>
+                </div>
               </div>
             </div>
           </div>

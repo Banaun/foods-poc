@@ -46,9 +46,7 @@ const FileUploader = ({
           htmlFor='formFile'
           className='form-label inline-block mb-2 text-sm'
         >
-          {chosenLayout?.length < 2 || !chosenLayout
-            ? 'Select at least two graphics before upload'
-            : 'Upload a file'}
+          Upload a file for processing
         </label>
         <input
           className='form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-clip-padding border border-solid border-blue-500 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-800 focus:outline-none disabled:opacity-50'
