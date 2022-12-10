@@ -6,19 +6,23 @@ import { Button } from '@material-tailwind/react';
 
 const OutputField = ({ selectedFile, retrievable, layout }) => {
   const [textArr, setTextArr] = useState([]);
-  const [identifiers, setIdentifiers] = useState();
   const [loading, setLoading] = useState(false);
   const [fileRetrieved, setFileRetrieved] = useState(false);
+  const [retrievedText, setRetrievedText] = useState('');
 
+  let identifiers = [];
   let totalIncome = 0;
 
   useEffect(() => {
     if (layout) {
-      const identifiersTemp = [];
+      identifiers = [];
       for (let graphic in layout) {
-        identifiersTemp.push(layout[graphic].id);
+        identifiers.push(layout[graphic].id);
       }
-      setIdentifiers(identifiersTemp);
+      if (retrievedText) {
+        totalIncome = 0;
+        replaceValuesWithSvg(retrievedText);
+      }
     }
   }, [layout]);
 
@@ -30,6 +34,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
       setLoading(true);
       //Get the processed text from backend
       ProcessFileService.process(selectedFile.name).then((res) => {
+        setRetrievedText(res.data.message);
         replaceValuesWithSvg(res.data.message);
         setLoading(false);
         setFileRetrieved(true);
@@ -39,17 +44,21 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
     }
   }
 
-  function replaceValuesWithSvg(retrievedText) {
-    //Separate characters into an array
-    let textArr = [...retrievedText];
-    let tempTextArr = [];
+  function replaceValuesWithSvg(text) {
+    //Separate items into an array
+    const itemArr = text.split(',');
+    let tempItemArr = [];
 
-    for (let i = 0; i <= 519; i++) {
-      if (identifiers.includes(textArr[i])) {
-        tempTextArr.push(textArr[i]);
+    for (let i = 0; i < itemArr.length; i++) {
+      if (identifiers.includes(itemArr[i])) {
+        tempItemArr.push(itemArr[i]);
       }
     }
-    setTextArr([...tempTextArr]);
+
+    if (tempItemArr.length > 513) {
+      tempItemArr = tempItemArr.slice(0, 513);
+    }
+    setTextArr([...tempItemArr]);
   }
 
   async function downloadImage(e) {
@@ -87,7 +96,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           <div className='mt-4 max-w-[90%] whitespace-pre-line break-normal'>
             {loading ? (
               <div className='loader mb-6'></div>
-            ) : layout.length >= 2 ? (
+            ) : layout.length >= 2 && textArr.length > 0 ? (
               <>
                 <div className='flex flex-row flex-wrap justify-center'>
                   {textArr.map((item) => {
@@ -137,7 +146,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           </div>
         </div>
       </div>
-      {fileRetrieved && layout.length >= 2 ? (
+      {fileRetrieved && layout.length >= 2 && textArr.length > 0 ? (
         <>
           <h1 className='text-3xl'>A3 Preview</h1>
           <div

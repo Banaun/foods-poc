@@ -69,7 +69,6 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
     setChosenLayout(updatedLayout);
     setValue(graphic.id);
     setPrice(graphic.price);
-    // setEmployeeData(previousEmployeeData => previousEmployeeData.filter(data)=> data.id != employeeId )
   };
 
   return (
