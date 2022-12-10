@@ -48,7 +48,7 @@ public class FileController {
             //if filename ends with .xlsx
             message = readUploadedFile.readAndReturnXLSX();
         } catch (Exception e) {
-            message = "Could not process the file.";
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Could not process the file."));
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }

@@ -5,13 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadUploadedFile {
+
     private String filename;
 
     public ReadUploadedFile(String filename) {
@@ -33,7 +31,14 @@ public class ReadUploadedFile {
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    fileContents += cell.getStringCellValue();
+                    if (cell != null) {
+                        CellType ct = cell.getCellType();
+                        if (ct == CellType.NUMERIC) {
+                            fileContents += format(cell.getNumericCellValue()+"");
+                        } else if (ct == CellType.STRING) {
+                            fileContents += format(cell.getStringCellValue());
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
@@ -41,5 +46,15 @@ public class ReadUploadedFile {
         }
 
         return fileContents;
+    }
+
+    public String format(String val){
+        String stringVal = String.valueOf(val);
+        String[] number = stringVal.split( "[.]" );
+        if(number.length>1 && number[1].equalsIgnoreCase("0")){
+            return number[0] + ",";
+        } else {
+            return val + ",";
+        }
     }
 }
