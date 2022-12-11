@@ -1,4 +1,3 @@
-import { Button } from '@material-tailwind/react';
 import UploadService from '../services/upload-files-service';
 
 const FileUploader = ({
@@ -6,7 +5,6 @@ const FileUploader = ({
   setSelectedFile,
   retrievable,
   setRetrievable,
-  chosenLayout,
 }) => {
   function handleChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -20,8 +18,9 @@ const FileUploader = ({
       //Upload the selected file to backend
       UploadService.upload(selectedFile)
         .then((res) => {
+          console.log(res);
           //Update state for retrievable text
-          if (res.data.message !== 'Could not upload the file.') {
+          if (res.status === 200) {
             setRetrievable(true);
             // alert(res.data.message);
           } else {
@@ -40,37 +39,45 @@ const FileUploader = ({
   }
 
   return (
-    <div className='flex flex-col justify-center w-[22rem] sm:w-[30rem] mt-6 mb-6'>
+    <div className='flex flex-col justify-center w-[22rem] sm:w-[30rem] mt-10'>
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>
         <label
           htmlFor='formFile'
           className='form-label inline-block mb-2 text-xs'
         >
-          Upload a file for processing when two graphics or more have been added
+          Start by uploading a file for processing, see example for file
+          structure{' '}
+          <a
+            className='text-hiqpink-500'
+            href='/example/example.png'
+            target='_blank'
+          >
+            here
+          </a>
         </label>
         <input
-          className='form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-clip-padding border border-solid border-pink-500 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-pink-800 focus:outline-none disabled:opacity-50'
+          className='block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer rounded-lg bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
           id='formFile'
           type='file'
           accept='.rtf, .md, .txt, .file, .xlsx'
           onChange={handleChange}
-          disabled={chosenLayout?.length < 2 || !chosenLayout}
-        ></input>
+        />
         {selectedFile ? (
-          <Button
+          <button
             type='submit'
-            color='pink'
-            className='mt-4'
+            className='mt-2 text-white bg-hiqpink-500 hover:bg-hiqpink-500 focus:outline-none rounded-lg text-sm px-4 py-2 text-center disabled:bg-hiqpink-100'
             disabled={retrievable}
           >
             Upload
-          </Button>
+          </button>
         ) : (
           <></>
         )}
       </form>
       {retrievable ? (
-        <p className='mt-4 text-center'>Uploaded file: {selectedFile.name}</p>
+        <p className='mt-2 text-center text-sm'>
+          Uploaded file: {selectedFile.name}
+        </p>
       ) : (
         <></>
       )}

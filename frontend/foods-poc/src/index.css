@@ -12,10 +12,17 @@ body {
 
 input::file-selector-button {
   padding: 0.5em;
-  background: rgb(233 30 99);
+  background: #ff0096;
   color: white;
   border: none;
+  cursor: pointer;
 }
+
+/*
+input::file-selector-button:hover {
+  background: #ff0096;
+}
+*/
 
 .loader {
   border: 16px solid #b4b4b4;

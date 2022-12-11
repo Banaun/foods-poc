@@ -15,31 +15,32 @@ function App() {
         <h1 className='text-2xl'>Data Visualisation</h1>
         <span className='flex flex-row text-sm mt-1 italic'>
           By: Christopher Danielsson & Emil Mogensen{' '}
-          <span className='text-pink-500 font-bold ml-1'>@</span>
+          <span className='text-hiqpink-500 font-bold ml-1'>@</span>
           <a href='https://hiq.se/' target='_blank'>
             <img className='w-10 ml-1' src={HiQLogo} alt='HiQ' />
           </a>
         </span>
       </div>
       <div className='flex flex-col justify-center items-center'>
-        <ChooseLayout
-          chosenLayout={chosenLayout}
-          setChosenLayout={setChosenLayout}
-        />
-
         <FileUploader
           selectedFile={selectedFile}
           retrievable={retrievable}
           setSelectedFile={setSelectedFile}
           setRetrievable={setRetrievable}
-          chosenLayout={chosenLayout}
         />
-        {retrievable ? (
+        <ChooseLayout
+          chosenLayout={chosenLayout}
+          setChosenLayout={setChosenLayout}
+          retrievable={retrievable}
+        />
+        {chosenLayout.length >= 2 ? (
           <OutputField
             selectedFile={selectedFile}
             retrievable={retrievable}
             layout={chosenLayout}
           />
+        ) : chosenLayout.length === 1 ? (
+          <span className='mt-2 text-xs'>Add at least two graphics</span>
         ) : (
           <></>
         )}
