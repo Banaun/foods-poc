@@ -75,18 +75,19 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
 
   return (
     <>
-      <div className='flex justify-center mb-6'>
-        <div className='flex flex-col items-center bg-white min-w-[30rem] max-w-[70rem] border border-solid border-blue-500'>
+      <div className='flex justify-center mb-20'>
+        <div className='flex flex-col items-center bg-white min-w-[30rem] max-w-[70rem] border border-solid border-pink-500'>
           <div className='flex flex-row justify-between mt-4'>
             <Button
               className='m-1'
+              color='pink'
               onClick={processText}
-              disabled={fileRetrieved}
+              disabled={fileRetrieved || layout.length < 2}
             >
-              Retrieve file
+              Process file
             </Button>
             {fileRetrieved && layout.length >= 2 ? (
-              <Button className='m-1' onClick={downloadImage}>
+              <Button className='m-1' color='pink' onClick={downloadImage}>
                 Download image
               </Button>
             ) : (
@@ -96,7 +97,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           <div className='mt-4 max-w-[90%] whitespace-pre-line break-normal'>
             {loading ? (
               <div className='loader mb-6'></div>
-            ) : layout.length >= 2 && textArr.length > 0 ? (
+            ) : textArr.length > 0 && layout.length >= 2 ? (
               <>
                 <div className='flex flex-row flex-wrap justify-center'>
                   {textArr.map((item) => {
@@ -140,8 +141,10 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
                   <></>
                 )}
               </>
-            ) : (
+            ) : layout.length < 2 ? (
               <p className='mb-6'>Please select at least two graphics!</p>
+            ) : (
+              <></>
             )}
           </div>
         </div>
@@ -151,7 +154,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           <h1 className='text-3xl'>A3 Preview</h1>
           <div
             id='a3'
-            className='flex justify-center items-center w-[3508px] h-[4961px] mb-40 break-normal border border-solid border-blue-500'
+            className='flex justify-center items-center w-[3508px] h-[4961px] mb-40 break-normal border border-solid border-pink-500'
           >
             <div className='max-w-[90%] h-full mt-[38rem]'>
               <div className='flex flex-row flex-wrap justify-center w-[3040px] max-h-[4500px]'>

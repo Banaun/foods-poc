@@ -44,12 +44,12 @@ const FileUploader = ({
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>
         <label
           htmlFor='formFile'
-          className='form-label inline-block mb-2 text-sm'
+          className='form-label inline-block mb-2 text-xs'
         >
-          Upload a file for processing
+          Upload a file for processing when two graphics or more have been added
         </label>
         <input
-          className='form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-clip-padding border border-solid border-blue-500 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-800 focus:outline-none disabled:opacity-50'
+          className='form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-clip-padding border border-solid border-pink-500 rounded transition ease-in-out m-0 focus:text-gray-700 focus:border-pink-800 focus:outline-none disabled:opacity-50'
           id='formFile'
           type='file'
           accept='.rtf, .md, .txt, .file, .xlsx'
@@ -57,7 +57,12 @@ const FileUploader = ({
           disabled={chosenLayout?.length < 2 || !chosenLayout}
         ></input>
         {selectedFile ? (
-          <Button type='submit' className='mt-4' disabled={retrievable}>
+          <Button
+            type='submit'
+            color='pink'
+            className='mt-4'
+            disabled={retrievable}
+          >
             Upload
           </Button>
         ) : (

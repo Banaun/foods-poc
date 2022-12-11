@@ -77,16 +77,27 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <span className='text-xs whitespace-nowrap mr-2'>
           Choose graphic for:{' '}
         </span>
-        <Input label='Art.nr' value={value} onChange={handleChange} />
+        <Input
+          label='Art.nr'
+          color='pink'
+          value={value}
+          onChange={handleChange}
+        />
         <span className='text-xs whitespace-nowrap mr-2 ml-2'>
           {`Set price for${value ? ' ' + value + ':' : ':'}`}{' '}
         </span>
-        <Input label='Price' value={price} onChange={handlePriceChange} />
+        <Input
+          label='Price'
+          color='pink'
+          value={price}
+          onChange={handlePriceChange}
+        />
       </div>
       <div className='flex flex-wrap justify-center mt-2 gap-4 max-w-[80%] 2xl:max-w-[50%]'>
         <Radio
           id='joystick'
           name='icon'
+          color='pink'
           value='Grafik-01'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -97,6 +108,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='controller'
           name='icon'
+          color='pink'
           value='Grafik-02'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -107,6 +119,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='half-circle-green'
           name='icon'
+          color='pink'
           value='Grafik-03'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -121,6 +134,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='triangle'
           name='icon'
+          color='pink'
           value='Grafik-04'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -131,6 +145,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='book-green'
           name='icon'
+          color='pink'
           value='Grafik-05'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -141,6 +156,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='meatball'
           name='icon'
+          color='pink'
           value='Grafik-06'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -151,6 +167,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='hotdog'
           name='icon'
+          color='pink'
           value='Grafik-07'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -161,6 +178,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='circle-green'
           name='icon'
+          color='pink'
           value='Grafik-08'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -175,6 +193,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='circle-pink'
           name='icon'
+          color='pink'
           value='Grafik-09'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -189,6 +208,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='line-pink'
           name='icon'
+          color='pink'
           value='Grafik-10'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -199,6 +219,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='leaf'
           name='icon'
+          color='pink'
           value='Grafik-11'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -209,6 +230,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='fire'
           name='icon'
+          color='pink'
           value='Grafik-12'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -219,6 +241,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='square-blue'
           name='icon'
+          color='pink'
           value='Grafik-13'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -233,6 +256,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='square-red'
           name='icon'
+          color='pink'
           value='Grafik-14'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -247,6 +271,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='book-blue'
           name='icon'
+          color='pink'
           value='Grafik-15'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -257,6 +282,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='half-circle-orange'
           name='icon'
+          color='pink'
           value='Grafik-16'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -271,6 +297,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='sandwich'
           name='icon'
+          color='pink'
           value='Grafik-17'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -281,6 +308,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
         <Radio
           id='bookcase'
           name='icon'
+          color='pink'
           value='Grafik-18'
           onChange={(e) => setIcon(e.target.value)}
           label={
@@ -295,6 +323,7 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
             <Chip
               className='mr-1 ml-1'
               key={graphic.id}
+              color='pink'
               value={graphic.id}
               icon={
                 <img
@@ -309,15 +338,17 @@ function ChooseLayout({ chosenLayout, setChosenLayout }) {
       ) : (
         <></>
       )}
-      {chosenLayout?.length < 2 ? (
+      {/* {chosenLayout?.length < 2 ? (
         <span className='text-sm font-bold mt-4'>
           Select at least two graphics
         </span>
       ) : (
         <></>
-      )}
+      )} */}
       <div className='mt-4'>
-        <Button onClick={addGraphic}>Add graphic</Button>
+        <Button color='pink' onClick={addGraphic}>
+          Add graphic
+        </Button>
       </div>
       {errorMsg ? <span className='mt-2 text-red-500'>{errorMsg}</span> : <></>}
     </>
