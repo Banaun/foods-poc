@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 import ProcessFileService from '../services/process-file-service';
 import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
-import { Button } from '@material-tailwind/react';
 
 const OutputField = ({ selectedFile, retrievable, layout }) => {
   const [textArr, setTextArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fileRetrieved, setFileRetrieved] = useState(false);
   const [retrievedText, setRetrievedText] = useState('');
+  const [identifiers, setIdentifiers] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
 
-  let identifiers = [];
   let totalIncome = 0;
 
   useEffect(() => {
     if (layout) {
-      identifiers = [];
+      setIdentifiers([]);
+      let tempIdentifiers = [];
       for (let graphic in layout) {
-        identifiers.push(layout[graphic].id);
+        tempIdentifiers.push({ id: layout[graphic].id, count: 0 });
       }
+      setIdentifiers(tempIdentifiers);
       if (retrievedText) {
         totalIncome = 0;
-        replaceValuesWithSvg(retrievedText);
+        setFileRetrieved(false);
+        setRetrievedText('');
+        setTextArr([]);
       }
     }
   }, [layout]);
@@ -57,16 +60,22 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
     //Separate items into an array
     const itemArr = text.split(',');
     let tempItemArr = [];
+    let tempIdentifiers = [...identifiers];
 
     for (let i = 0; i < itemArr.length; i++) {
-      if (identifiers.includes(itemArr[i])) {
-        tempItemArr.push(itemArr[i]);
+      for (let id in tempIdentifiers) {
+        if (Object.values(tempIdentifiers[id]).includes(itemArr[i])) {
+          tempItemArr.push(itemArr[i]);
+          if (tempItemArr.length <= 513) {
+            tempIdentifiers[id].count += 1;
+          }
+        }
       }
     }
-
     if (tempItemArr.length > 513) {
       tempItemArr = tempItemArr.slice(0, 513);
     }
+    setIdentifiers(tempIdentifiers);
     setTextArr([...tempItemArr]);
   }
 
@@ -75,11 +84,14 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
     e.preventDefault();
 
     const outputElement = document.getElementById('a3');
+    outputElement.style.borderWidth = '0px';
 
     const canvas = await html2canvas(outputElement);
     const dataURL = canvas.toDataURL('image/png');
 
     downloadjs(dataURL, 'foodspoc.png', 'image/png');
+
+    outputElement.style.borderWidth = '1px';
   }
 
   return (
@@ -105,10 +117,10 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           )}
         </div>
         {loading ? (
-          <div role='status'>
+          <div role='status' className='mt-6'>
             <svg
               aria-hidden='true'
-              class='mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600'
+              className='mr-2 w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-hiqpink-500'
               viewBox='0 0 100 101'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
@@ -122,7 +134,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
                 fill='currentFill'
               />
             </svg>
-            <span class='sr-only'>Loading...</span>
+            <span className='sr-only'>Loading...</span>
           </div>
         ) : textArr.length > 0 && layout.length >= 2 ? (
           <>
@@ -149,23 +161,51 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
               {fileRetrieved && layout.length >= 2 ? (
                 <div className='flex flex-row w-full h-20 justify-between items-center'>
                   <div className='flex flex-row items-center ml-[4.2rem]'>
+                    <span className='text-xs font-bold mr-1'>Art.nr:</span>
                     {layout.map((graphic) => {
                       return (
                         <>
                           <img
-                            className='w-[40px]'
+                            className='w-[25px]'
                             src={require(`../assets/images/${graphic.icon}.png`)}
                             alt='icon'
                           />
-                          <span className='text-xl mr-4'>
+                          <span className='text-xs mr-2'>
                             {`= ${graphic.id}`}
                           </span>
                         </>
                       );
                     })}
                   </div>
-                  <div>
-                    <span className='text-xl mr-[4.5rem]'>{`Accumulated income: ${totalIncome}kr`}</span>
+                  <div className='flex justify-between'>
+                    <div className='flex items-center mr-8'>
+                      <span className='text-xs font-bold mr-1'>
+                        Distribution:
+                      </span>
+                      {layout.map((graphic, index) => {
+                        return (
+                          <>
+                            <img
+                              className='w-[25px]'
+                              src={require(`../assets/images/${graphic.icon}.png`)}
+                              alt='icon'
+                            />
+                            <span className='text-xs mr-2'>
+                              {`= ${
+                                parseInt(graphic.price) *
+                                identifiers[index]?.count
+                              }kr`}
+                            </span>
+                          </>
+                        );
+                      })}
+                    </div>
+                    <div className='flex items-center'>
+                      <span className='text-xs font-bold mr-1'>
+                        Accumulated income:
+                      </span>
+                      <span className='text-xs mr-[4.5rem]'>{`${totalIncome}kr`}</span>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -182,7 +222,7 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
           <h1 className='text-3xl'>A3 Preview</h1>
           <div
             id='a3'
-            className='flex justify-center items-center w-[3508px] h-[4961px] mb-40 break-normal border border-solid border-pink-500'
+            className='flex justify-center items-center w-[3508px] h-[4961px] mb-40 break-normal bg-white border border-solid border-pink-500'
           >
             <div className='max-w-[90%] h-full mt-[38rem]'>
               <div className='flex flex-row flex-wrap justify-center w-[3040px] max-h-[4500px]'>
@@ -201,24 +241,52 @@ const OutputField = ({ selectedFile, retrievable, layout }) => {
                 })}
               </div>
               <div className='flex flex-row w-full h-[20rem] justify-between items-center'>
-                <div className='flex flex-row items-center'>
+                <div className='flex flex-row items-center ml-6'>
+                  <span className='text-[2rem] font-bold mr-2'>Art.nr:</span>
                   {layout.map((graphic) => {
                     return (
                       <>
                         <img
-                          className='w-[120px]'
+                          className='w-[60px]'
                           src={require(`../assets/images/${graphic.icon}.png`)}
                           alt='icon'
                         />
-                        <span className='text-[3rem] mr-4'>
+                        <span className='text-[2rem] mr-4'>
                           {`= ${graphic.id}`}
                         </span>
                       </>
                     );
                   })}
                 </div>
-                <div>
-                  <span className='text-[3rem]'>{`Accumulated income: ${totalIncome}kr`}</span>
+                <div className='flex justify-between'>
+                  <div className='flex flex-row items-center mr-24'>
+                    <span className='text-[2rem] font-bold mr-2'>
+                      Distribution:
+                    </span>
+                    {layout.map((graphic, index) => {
+                      return (
+                        <>
+                          <img
+                            className='w-[60px]'
+                            src={require(`../assets/images/${graphic.icon}.png`)}
+                            alt='icon'
+                          />
+                          <span className='text-[2rem] mr-4'>
+                            {`= ${
+                              parseInt(graphic.price) *
+                              identifiers[index]?.count
+                            }kr`}
+                          </span>
+                        </>
+                      );
+                    })}
+                  </div>
+                  <div className='flex items-center'>
+                    <span className='text-[2rem] font-bold mr-2'>
+                      Accumulated income:
+                    </span>
+                    <span className='text-[2rem] mr-6'>{`${totalIncome}kr`}</span>
+                  </div>
                 </div>
               </div>
             </div>

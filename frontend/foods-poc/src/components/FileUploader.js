@@ -56,7 +56,7 @@ const FileUploader = ({
           </a>
         </label>
         <input
-          className='block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer rounded-lg bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+          className='block w-full text-sm text-gray-700 border border-gray-300 cursor-pointer rounded-lg focus:outline-none'
           id='formFile'
           type='file'
           accept='.rtf, .md, .txt, .file, .xlsx'
