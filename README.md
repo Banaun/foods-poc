@@ -1,6 +1,6 @@
 # Foods-PoC
 
-This project came to life when I had my intership at HiQ Malmö.
+This project came to life when I had my internship at HiQ Malmö.
 The project consists of two parts:
 
 - backend with Java Spring
